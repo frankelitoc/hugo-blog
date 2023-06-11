@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on madebyfrankie</title>
+    <link>https://madebyfrankely.com/posts/</link>
+    <description>Recent content in Posts on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jun 2023 00:16:02 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment</title>
+      <link>https://madebyfrankely.com/posts/gitlab_cicd/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/gitlab_cicd/</guid>
+      <description>In today&amp;rsquo;s world of fast-paced software development, efficient deployment of applications has become more critical than ever. Containerization has revolutionized how we build, ship, and run applications, making it easier to deploy them consistently across different environments.
+In this blog post, we will explore containerizing a simple Node.js weather application GITHUB that displays weather data from any given location, and then with this done proceed to automate its deployment using a GitLab CI/CD pipeline.</description>
+    </item>
+    
+    <item>
+      <title>Building a CI/CD Pipeline for my AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/aws_resume_cicd/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_resume_cicd/</guid>
+      <description>This past week I decided to tackle the AWS Cloud Resume Challenge by Forrest Brazeal which involves deploying my resume into the cloud using AWS resources.
+In today&amp;rsquo;s world, Continuous Integration and Continuous Deployment (CI/CD) have become essential practices for delivering high-quality software quickly and efficiently. In this blog post, I will share my experience building a CI/CD pipeline for the Frontend of my AWS Cloud Resume.
+What is Continuous Integration?</description>
+    </item>
+    
+    <item>
+      <title>Serverless backend architecture - AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/serverless_lambda/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/serverless_lambda/</guid>
+      <description>When you think about serverless architectures in the cloud what exactly comes to mind? If you have not researched more into this topic you would probably think there is a way to run resources without servers because it&amp;rsquo;s called a server-LESS architecture.
+Well not necessarily, when I mention a serverless architecture I mean we are building an architecture that requires no server management, we don&amp;rsquo;t see the server, or manage it.</description>
+    </item>
+    
+    <item>
+      <title>Containerizing a web application with Docker</title>
+      <link>https://madebyfrankely.com/posts/flask_containerizing/</link>
+      <pubDate>Fri, 24 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/flask_containerizing/</guid>
+      <description>Have you ever wondered if there was a way to code web applications using Python? Flask is just that, it is a web framework that lets you develop web applications using Python.
+It also has many nice features like URL routing, template engine, and so on. I will be containerizing my simple Flask web application, you can find the source code of the application code here.
+This is an extremely simple web application that uses the home.</description>
+    </item>
+    
+    <item>
+      <title>Automating AWS EC2s with C&#43;&#43; SDK</title>
+      <link>https://madebyfrankely.com/posts/aws_sdk_automate/</link>
+      <pubDate>Fri, 10 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_sdk_automate/</guid>
+      <description>The AWS SDK for C++ is a library that makes it easy to integrate your C++ application with AWS services like Amazon S3, Amazon EC2, and many others services.
+For this project I will show how to create a C++ application that we will be using to create AWS EC2 instances from our newly created application using the C++ SDK provided by AWS without the use of logging into our AWS console to perform this action, all this will be done directly from our application hence automating the overall process.</description>
+    </item>
+    
+    <item>
+      <title>Deploying an Nginx Web Server on an EC2 instance with Terraform</title>
+      <link>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</link>
+      <pubDate>Thu, 19 Jan 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</guid>
+      <description>Why waste your time clicking and setting up infrastructure through a web console if you can write code to provision those resources for you?
+Today I will share with you my latest project of deploying an EC2 instance using Terraform, but not only we will be provisioning this instance, also running a bash script as soon as it&amp;rsquo;s deployed to install Nginx to have a small site for us to show our friends like this.</description>
+    </item>
+    
+    <item>
+      <title>Installing Docker on my Raspberry Pi (Ubuntu)</title>
+      <link>https://madebyfrankely.com/posts/installing_docker_raspberry/</link>
+      <pubDate>Fri, 06 Jan 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/installing_docker_raspberry/</guid>
+      <description>I recently got my hands on a Raspberry Pi 4 with 4GBs of RAM for a decently reasonable price. I took the bullet on it to make it my small home server for the next few months since I&amp;rsquo;m experimenting with Linux more and more every day.
+Raspberry Pi A raspberry Pi is a minicomputer the amount of stuff this little thing can achieve is impressive. I have been having my eyes on these micro machines for a while so I was super excited to get a hold of one and make it my home server.</description>
+    </item>
+    
+    <item>
+      <title>Installing a LAMP Stack on Ubuntu 20.04</title>
+      <link>https://madebyfrankely.com/posts/linux_lamp_stack/</link>
+      <pubDate>Fri, 30 Dec 2022 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/linux_lamp_stack/</guid>
+      <description>In this project, I will be showing you how to set up a LAMP Web Server on a Ubuntu 20.04 VPS so that we can have our own website!
+What is meant by LAMP Stack? The answer is actually in the name itself. A LAMP stack is basically a bundle of different software technologies that people use to build websites and even web applications. LAMP is an acronym for the operating system, Linux; the web server, Apache; the database server, MySQL; and the programming language, PHP.</description>
+    </item>
+    
+  </channel>
+</rss>

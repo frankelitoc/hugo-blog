@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Serverless backend architecture - AWS Cloud Resume</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, devops, aws, python'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/serverless_lambda/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Serverless backend architecture - AWS Cloud Resume">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/docker_linux.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Serverless backend architecture - AWS Cloud Resume">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/serverless_lambda/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/serverless_lambda/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/serverless_lambda/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Serverless backend architecture - AWS Cloud Resume</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            March 6, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/devops">devops</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/aws">aws</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/python">python</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442336536985600/WnS8Blk.png" alt="Alt Text"></p>
+<p>When you think about serverless architectures in the cloud what exactly comes to mind? If you have not researched more into this topic you would probably think there is a way to run resources without servers because it&rsquo;s called a server-LESS architecture.</p>
+<p>Well not necessarily, when I mention a serverless architecture I mean we are building an architecture that requires no server management, we don&rsquo;t see the server, or manage it. We have our specific resource running without the worry of server management, in other words, it just works.</p>
+<p>I will be showing you how I used AWS services like DynamoDB, Lambda Function, and API Gateway to build a serverless backend architecture for my AWS cloud resume.</p>
+<p>Our architecture diagram will be the following:</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442336536985600/WnS8Blk.png" alt="Alt Text"></p>
+<p>As you can see is fairly simple, let&rsquo;s now explain it in further detail. Our resume is currently hosted in an S3 Bucket which is the frontend of our project, now I decided to add a way to show the number of visitors my page has, I had to make sure that this will have little to no cost and also to have a way to store the number of visitors somewhere.</p>
+<p>The diagram above shows how we use an API Gateway trigger to a Lambda function that runs a python code that retrieves the number of visitors which is an integer stored inside a DynamoDB table after this is done the function then proceeds to increase the number since technically every time this API call is made it would be a new visitor (we will need some Javascript code inside our frontend which I will discuss later on). After all of this process is done the Lambda function then sends the updated number back to our site which is then displayed to our visitors.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442532918493184/image-6.png" alt="Alt Text"></p>
+<p>Inside our DynamoDB table we must have a key and value pair for our Lambda function to retrieve the number from. In this example, I used the partition key mainid, assigned it a value of 1, and added a new attribute of an integer that holds the number of our site visitors.</p>
+<p>Now that we have our DynamoDB table ready now is time for the main part of the puzzle, the Lambda function. As I mentioned above we will be using a Python Lambda function since our code will be written in Python.</p>
+<p>After having our function created before continuing with writing our code we have to make sure that the IAM role created for our Lambda function has the correct permissions policies to retrieve/update items inside our DynamoDB table.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442668935585802/image-7.png" alt="Alt Text"></p>
+<p>For this case, I added the AmazonDynamoDBFull policy into the role which technically is not the smartest idea. For security purposes, it would be better to create a policy that only grants usage to the VisitorCount table since in this case this role now has access to all the tables inside our AWS account, for this situation I will keep this way since this is my personal account.</p>
+<p>Now let&rsquo;s proceed to write our Python code to manipulate the data inside our DynamoDB table, we will be using the Boto3 library which is the standard AWS SDK for Python.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442768378343505/image-8.png" alt="Alt Text"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Setup our boto3 DynamoDB resource </span>
+</span></span><span style="display:flex;"><span>dynamoDB <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#39;dynamodb&#39;</span>)
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">=</span> dynamoDB<span style="color:#f92672">.</span>Table(<span style="color:#e6db74">&#39;TestTable&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lambda_handler</span>(event, context):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Let&#39;s first obtain the latest count from the table</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>get_item(Key<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;mainid&#39;</span>: <span style="color:#ae81ff">1</span>})
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Once we obtain the current count we declare a new variable and add + 1 into it</span>
+</span></span><span style="display:flex;"><span>    Newcount <span style="color:#f92672">=</span> response[<span style="color:#e6db74">&#39;Item&#39;</span>][<span style="color:#e6db74">&#39;views&#39;</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Put the latest value into the table</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>put_item(Item<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;mainid&#39;</span>:<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;views&#39;</span>:Newcount})
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Return 200</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">200</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;body&#39;</span>: Newcount
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Now that we have our Python code set up and ready we can now add our API Gateway trigger in front of it.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442975270785144/image-9.png" alt="Alt Text"></p>
+<p>And that will do it, now every time we access our API Gateway URL provided we will see our visitor count integer displayed.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107442996854673568/image-10.png" alt="Alt Text"></p>
+<p>We can now use Javascript inside our site to invoke the API call every time a new visitor has joined our site and display it to our users.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1107443015498342471/image-11.png" alt="Alt Text"></p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

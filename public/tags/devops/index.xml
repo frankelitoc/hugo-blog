@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>devops on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/devops/</link>
+    <description>Recent content in devops on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jun 2023 00:16:02 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment</title>
+      <link>https://madebyfrankely.com/posts/gitlab_cicd/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/gitlab_cicd/</guid>
+      <description>In today&amp;rsquo;s world of fast-paced software development, efficient deployment of applications has become more critical than ever. Containerization has revolutionized how we build, ship, and run applications, making it easier to deploy them consistently across different environments.
+In this blog post, we will explore containerizing a simple Node.js weather application GITHUB that displays weather data from any given location, and then with this done proceed to automate its deployment using a GitLab CI/CD pipeline.</description>
+    </item>
+    
+    <item>
+      <title>Building a CI/CD Pipeline for my AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/aws_resume_cicd/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_resume_cicd/</guid>
+      <description>This past week I decided to tackle the AWS Cloud Resume Challenge by Forrest Brazeal which involves deploying my resume into the cloud using AWS resources.
+In today&amp;rsquo;s world, Continuous Integration and Continuous Deployment (CI/CD) have become essential practices for delivering high-quality software quickly and efficiently. In this blog post, I will share my experience building a CI/CD pipeline for the Frontend of my AWS Cloud Resume.
+What is Continuous Integration?</description>
+    </item>
+    
+    <item>
+      <title>Serverless backend architecture - AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/serverless_lambda/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/serverless_lambda/</guid>
+      <description>When you think about serverless architectures in the cloud what exactly comes to mind? If you have not researched more into this topic you would probably think there is a way to run resources without servers because it&amp;rsquo;s called a server-LESS architecture.
+Well not necessarily, when I mention a serverless architecture I mean we are building an architecture that requires no server management, we don&amp;rsquo;t see the server, or manage it.</description>
+    </item>
+    
+    <item>
+      <title>Automating AWS EC2s with C&#43;&#43; SDK</title>
+      <link>https://madebyfrankely.com/posts/aws_sdk_automate/</link>
+      <pubDate>Fri, 10 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_sdk_automate/</guid>
+      <description>The AWS SDK for C++ is a library that makes it easy to integrate your C++ application with AWS services like Amazon S3, Amazon EC2, and many others services.
+For this project I will show how to create a C++ application that we will be using to create AWS EC2 instances from our newly created application using the C++ SDK provided by AWS without the use of logging into our AWS console to perform this action, all this will be done directly from our application hence automating the overall process.</description>
+    </item>
+    
+    <item>
+      <title>Deploying an Nginx Web Server on an EC2 instance with Terraform</title>
+      <link>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</link>
+      <pubDate>Thu, 19 Jan 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</guid>
+      <description>Why waste your time clicking and setting up infrastructure through a web console if you can write code to provision those resources for you?
+Today I will share with you my latest project of deploying an EC2 instance using Terraform, but not only we will be provisioning this instance, also running a bash script as soon as it&amp;rsquo;s deployed to install Nginx to have a small site for us to show our friends like this.</description>
+    </item>
+    
+  </channel>
+</rss>

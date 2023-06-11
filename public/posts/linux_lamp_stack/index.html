@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Installing a LAMP Stack on Ubuntu 20.04</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, linux, administration'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/linux_lamp_stack/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Installing a LAMP Stack on Ubuntu 20.04">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/Check-Apache-Service-in-Ubuntu.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/Check-Apache-Service-in-Ubuntu.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Installing a LAMP Stack on Ubuntu 20.04">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/linux_lamp_stack/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/linux_lamp_stack/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/Check-Apache-Service-in-Ubuntu.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/linux_lamp_stack/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Installing a LAMP Stack on Ubuntu 20.04</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            December 30, 2022
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/linux">linux</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/administration">administration</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="/image/Check-Apache-Service-in-Ubuntu.png" alt="Alt Text"></p>
+<p>In this project, I will be showing you how to set up a LAMP Web Server on a Ubuntu 20.04 VPS so that we can have our own website!</p>
+<h2 id="what-is-meant-by-lamp-stack"><strong>What is meant by LAMP Stack?</strong></h2>
+<p>The answer is actually in the name itself. A LAMP stack is basically a bundle of different software technologies that people use to build websites and even web applications. LAMP is an acronym for the operating system, Linux; the web server, Apache; the database server, MySQL; and the programming language, PHP.</p>
+<p><img src="/image/lamp.png" alt="Alt Text"></p>
+<p>This task is performed a lot by cloud engineers or even system administrators. Before thinking about switching to the cloud you must first have your initial workspace to do so and that&rsquo;s when a LAMP server comes in to provide the ability to host your websites or applications in the cloud.</p>
+<p>Now to start off there are a few prerequisites you must have to get this project done, and they are the following:</p>
+<ul>
+<li>Linux Machine (in my case i&rsquo;m using a VPS)</li>
+<li>Linux Bash</li>
+</ul>
+<p>That&rsquo;s all eventually more things come into play here but we will leave that for another day.</p>
+<p>I&rsquo;m currently using a Windows machine but we can access our VPS here using SSH. SSH is used to communicate with a Linux machine and receive access to a Linux Bash terminal without physically or remotely being connected to the machine itself.</p>
+<p>After doing so we now have a root SSH client connected to our VPS here.</p>
+<p>The first thing we would wanna do, especially if you just installed a fresh Ubuntu distro as I did will be to add a user to your machine. For good practices is best to create a new user apart from the root user on our machine reason behind it is root is able to make very destructive changes, even by accident.</p>
+<p>We go ahead and type adduser {yourname} to start this process, then proceed to fill out the required settings for the user like the password and so on. I usually leave the extra information as default.</p>
+<p><img src="/image/image-6.png" alt="Alt Text"></p>
+<p>When your new user has been created we can close out this connection to log out of the root user and initiate the SSH connection with our newly created user, and we are good to proceed.</p>
+<p>As I mentioned earlier this machine is running on a fresh Ubuntu installation, another good practice is to update our packages here by using the following command:</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt update
+sudo apt upgrade</code></pre>
+<p>After this has been completed we can proceed to install the LAMP software as mentioned at the start. We have the Linux machine which takes care of the L, now A is next here which is Apache, to install apache run the following:</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt install apache2</code></pre>
+<p>Once that has been processed apache2 service should have started automatically. To double check this is true we can run a status check on the service using systemctl</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo systemctl status apache2</code></pre>
+<p><img src="/image/image-7.png" alt="Alt Text"></p>
+<p>It should display active (running) with green text as shown above. Now that our apache2 service is up and running we can open up our server IP in our browser and we should be able to see the Apache2 default page.</p>
+<p><img src="/image/image-8.png" alt="Alt Text"></p>
+<p>Pretty simple right? Of course, there is also a deeper configuration for our apache2 server here but as this is not the case with this post we will leave this for another day as well.</p>
+<p>Now that we have Apache2 installed and running on our machine. Next on we have MySQL.</p>
+<p>What&rsquo;s a good web server without a database system to be able to store and manage data for our site correct? MySQL takes care of that, let&rsquo;s get that installed as well.</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt install mysql-server</code></pre>
+<p>We can verify our SQL server is up and running by once again running systemctl service status check</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">systemctl status mysql</code></pre>
+<p>It is also recommended that once MySQL installation has been performed run a security script called mysql_secure_installation which will remove some insecure default settings and lock down free access to our database system. Let&rsquo;s go ahead and do so:</p>
+<p>After this has been completed we are good to go with our SQL server. For last we have PHP.</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt install php libapache2-mod-php php-mysql</code></pre>
+<p>That&rsquo;s it, folks. We have successfully set up our own LAMP server, we can use this environment to host numerous different things blogs, your own website, and applications you name it. Hopefully, this has been helpful to you the reader.</p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

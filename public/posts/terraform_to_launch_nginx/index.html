@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Deploying an Nginx Web Server on an EC2 instance with Terraform</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, devops, aws, terraform'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/terraform_to_launch_nginx/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Deploying an Nginx Web Server on an EC2 instance with Terraform">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/docker_linux.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploying an Nginx Web Server on an EC2 instance with Terraform">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/terraform_to_launch_nginx/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/terraform_to_launch_nginx/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/terraform_to_launch_nginx/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Deploying an Nginx Web Server on an EC2 instance with Terraform</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            January 19, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/devops">devops</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/aws">aws</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/terraform">terraform</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105697155408220262/1620155432-blog-library-product-terraform-aws-logomarks-dark.jpg" alt="Alt Text"></p>
+<p>Why waste your time clicking and setting up infrastructure through a web console if you can write code to provision those resources for you?</p>
+<p>Today I will share with you my latest project of deploying an EC2 instance using Terraform, but not only we will be provisioning this instance, also running a bash script as soon as it&rsquo;s deployed to install Nginx to have a small site for us to show our friends like this.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105697364745924669/image-5.png" alt="Alt Text"></p>
+<h2 id="what-is-terraform"><em><strong>What is Terraform?</strong></em></h2>
+<p>Terraform is an infrastructure as code tool which lets you manage cloud and on-prem resources. It&rsquo;s primarily used by DevOps teams to automate various infrastructure tasks like the one that I will be showing you today. Instead of going manually on AWS and clicking to deploy this project I will be using Terraform to automate that process and deploying our resources needed in a matter of seconds.</p>
+<p>You can read more about Terraform and Infrastructure as code here</p>
+<p>I would go into more detail about these topics but this will be outside of the main scope of this post, with that being said let&rsquo;s get started.</p>
+<h2 id="setting-up-the-project-environment"><em><strong>Setting up the project environment</strong></em></h2>
+<p>Let&rsquo;s start by creating our main files here. Our project will consist of the following files, I will go into further detail on each.</p>
+<ul>
+<li>main.tf - &gt; We will declare our AWS resources here (EC2, Security Group, VPC)</li>
+<li>outputs.tf -&gt; Will hold our output variables which will be shown after deployment (EC2 DNS)</li>
+<li>providers.tf - &gt; This file will hold our AWS provider</li>
+<li>variables.tf -&gt; We will define all our variables here for example the AWS region we would like to deploy our resources to.</li>
+</ul>
+<h2 id="aws-resources"><em><strong>AWS Resources</strong></em></h2>
+<p>On our main.tf let&rsquo;s start by declaring the resources needed for our EC2 instance. In order for our friends to have access to see our cool site we must allow public access to it. We could create our own VPC for the purpose of our site but the default VPC that AWS creates for us should be enough here alongside a new AWS security group, which will be provisioned by Terraform as well to allow port 80 (HTTP).</p>
+<p><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#75715e"># &lt; Declare the region we are going to deploy our AWS resources &gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">provider</span> <span style="color:#e6db74">&#34;aws&#34;</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">region</span> = var.<span style="color:#a6e22e">aws_region</span>
+</span></span><span style="display:flex;"><span>}<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># Default VPC for our EC2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_default_vpc&#34;</span> <span style="color:#e6db74">&#34;default&#34;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># &lt;Our security group resource to configure public access to our EC2 &gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_security_group&#34;</span> <span style="color:#e6db74">&#34;world_wide_access&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;world_wide_access&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;default VPC security group to provide public access to our EC2 instance&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span> = <span style="color:#a6e22e">aws_default_vpc</span>.<span style="color:#a6e22e">default</span>.<span style="color:#a6e22e">id</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # TCP access
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">ingress</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">from_port</span> = <span style="color:#ae81ff">22</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">to_port</span> = <span style="color:#ae81ff">22</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">protocol</span> = <span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cidr_blocks</span> = [<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style="display:flex;"><span>  }<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # HTTP access from anywhere
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">ingress</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">from_port</span> = <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">to_port</span> = <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">protocol</span> = <span style="color:#e6db74">&#34;tcp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cidr_blocks</span> = [<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">egress</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">from_port</span>   = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">to_port</span>     = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">protocol</span>    = <span style="color:#e6db74">&#34;-1&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">cidr_blocks</span> = [<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+As you can see we create a aws_default_vpc resource which will retrieve the required information to be used for our new security group called world_wide_access. We then go on to pass the arguments to allow TCP 22 (SSH) and port 80 (HTTP)</p>
+<p>Next, we can proceed to declare our main EC2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#75715e"># &lt;Our main EC2 instance which will host our NGINX configuartion &gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_instance&#34;</span> <span style="color:#e6db74">&#34;ec2_instance&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ami</span> = <span style="color:#e6db74">&#34;ami-06878d265978313ca&#34;</span><span style="color:#75715e"> # Ubuntu Server 22.04 Free Tier
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">instance_type</span> = <span style="color:#e6db74">&#34;t2.micro&#34;</span><span style="color:#75715e"> # t2.micro instance type on this case gives us enough hardware to play around here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">key_name</span> = <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">ssh_key_name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#75715e"> # Decided to generate our SSH key pair manually here instead of creating it through Terraform. In a real world scenario we should be careful with keys and keep them private.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    #Script to install nginx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">user_data</span> = <span style="color:#f92672">&lt;&lt;-EOF</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  #!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  echo &#34;*** Installing nginx&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  sudo apt update -y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  sudo apt-get install nginx -y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  sudo systemctl start nginx
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  sudo systemctl enable nginx
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  echo &#39;&lt;center&gt;&lt;h1&gt; Hi! I was fully deployed using code instead of boring clicks :&gt; &lt;/h1&gt;&lt;/center&gt;&#39; &gt; /var/www/html/index.html
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  echo &#34;*** Completed Installing nginx&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  </span><span style="color:#f92672">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">vpc_security_group_ids</span> = [
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">aws_security_group</span>.<span style="color:#a6e22e">world_wide_access</span>.<span style="color:#a6e22e">id</span>
+</span></span><span style="display:flex;"><span>   ]
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>We pass on our AMI which is a Ubuntu Server 22.04, instance type which t2.micro should give us enough hardware for this case, and our SSH key name which I decided to generate manually here instead of creating it through Terraform code. The reason behind that is that in a real-world scenario, we should be careful with keys and keep them private.</p>
+<p>The main takeaway from the EC2 resource is that we use the argument user_data to run our Nginx install script after the instance has been provisioned. We could have used one of Terraform&rsquo;s provisoners here for example the remote_exec provisoner which invokes a script on a remote resource after it is created. You can read more about it here.</p>
+<p>Terraform&rsquo;s documentation states that provisoners should be used as last resort and the user_data argument already gives us the ability to perform such script without the use of actual provisoners so we will go that route for this case.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105698150443925564/image-7_1.png" alt="Alt Text"></p>
+<h2 id="variables-and-outputs"><em><strong>Variables and Outputs</strong></em></h2>
+<p>Our variables.tf file will consist of the variables that we used in our resources which were the AWS region we will be deploying our instance to and our SSH key name.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;aws_region&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">type</span> = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;AWS Region to deploy our resources&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;us-east-1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;ssh_key_name&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">type</span> = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;Our key pair key name created from our AWS console for security purposes&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;master-key&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>As for our outputs.tf we only are going to have one output for this case and that will be the public_dns of our EC2 instance. We can click it right off the console once the resources have been provisioned.</p>
+<h2 id="terraform-providers"><em><strong>Terraform Providers</strong></em></h2>
+<p>As for our last but not least provider.tf file we will declare the providers that we will be using in our environment which of course will be the AWS provider.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span>  = <span style="color:#e6db74">&#34;hashicorp/aws&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;4.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>That will take care of our main resources and we are now ready to provision our EC2 instance.</p>
+<h2 id="launching-our-resources-"><em><strong>Launching Our Resources 🚀</strong></em></h2>
+<p>We can now launch our resources with only 3 commands. The first command will be to initialize our backend to install our providers.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105699041330864269/image-8_1.png" alt="Alt Text"></p>
+<p>Next on we have our plan command which should be a dry run to see how our resources are going to be provisioned in the cloud.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105699175959642132/image-9.png" alt="Alt Text"></p>
+<p>For last we have our apply command which will provision our resources in the cloud and launch the EC2 instance with our Nginx script.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105699210067718265/image-10_1.png" alt="Alt Text"></p>
+<p>We can now see our output which we declared in our outputs.tf file and that is:</p>
+<p>aws_instance_public_dns = &ldquo;ec2-52-90-199-149.compute-1.amazonaws.com&rdquo;</p>
+<p>If we open up our browser here and copy-paste our instance public DNS we should see our new site up and running.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1105699442960646215/image-11_1.png" alt="Alt Text"></p>
+<h2 id="conclusion"><em><strong>Conclusion</strong></em></h2>
+<p>Terraform is truly unique and I&rsquo;m loving it, I come from a developer background so just the fact that we can use actual code to provision resources is truly amazing. I used this EC2 instance just to deploy a simple Nginx web server but this can be evolved into so many different things, for example, we could use Terraform to test a new production site, we could have a git script that pulls your site&rsquo;s repository from GitHub and automatically deploys it into your newly created EC2 instance to test and troubleshoot before launching it into the real world.</p>
+<h2 id="source-code"><em><strong>Source Code</strong></em></h2>
+<p><a href="https://github.com/frankelitoc/Terraform-EC2">https://github.com/frankelitoc/Terraform-EC2</a></p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

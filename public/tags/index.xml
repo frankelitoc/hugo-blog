@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/</link>
+    <description>Recent content in Tags on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jun 2023 00:16:02 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cicd</title>
+      <link>https://madebyfrankely.com/tags/cicd/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/cicd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>https://madebyfrankely.com/tags/devops/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://madebyfrankely.com/tags/linux/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws</title>
+      <link>https://madebyfrankely.com/tags/aws/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://madebyfrankely.com/tags/python/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>terraform</title>
+      <link>https://madebyfrankely.com/tags/terraform/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://madebyfrankely.com/tags/docker/</link>
+      <pubDate>Fri, 24 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flask</title>
+      <link>https://madebyfrankely.com/tags/flask/</link>
+      <pubDate>Fri, 24 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/flask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;</title>
+      <link>https://madebyfrankely.com/tags/c&#43;&#43;/</link>
+      <pubDate>Fri, 10 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>administration</title>
+      <link>https://madebyfrankely.com/tags/administration/</link>
+      <pubDate>Fri, 30 Dec 2022 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/tags/administration/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

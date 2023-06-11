@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/docker/</link>
+    <description>Recent content in docker on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 24 Feb 2023 23:11:13 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Containerizing a web application with Docker</title>
+      <link>https://madebyfrankely.com/posts/flask_containerizing/</link>
+      <pubDate>Fri, 24 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/flask_containerizing/</guid>
+      <description>Have you ever wondered if there was a way to code web applications using Python? Flask is just that, it is a web framework that lets you develop web applications using Python.
+It also has many nice features like URL routing, template engine, and so on. I will be containerizing my simple Flask web application, you can find the source code of the application code here.
+This is an extremely simple web application that uses the home.</description>
+    </item>
+    
+    <item>
+      <title>Installing Docker on my Raspberry Pi (Ubuntu)</title>
+      <link>https://madebyfrankely.com/posts/installing_docker_raspberry/</link>
+      <pubDate>Fri, 06 Jan 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/installing_docker_raspberry/</guid>
+      <description>I recently got my hands on a Raspberry Pi 4 with 4GBs of RAM for a decently reasonable price. I took the bullet on it to make it my small home server for the next few months since I&amp;rsquo;m experimenting with Linux more and more every day.
+Raspberry Pi A raspberry Pi is a minicomputer the amount of stuff this little thing can achieve is impressive. I have been having my eyes on these micro machines for a while so I was super excited to get a hold of one and make it my home server.</description>
+    </item>
+    
+  </channel>
+</rss>

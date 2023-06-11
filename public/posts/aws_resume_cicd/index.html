@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Building a CI/CD Pipeline for my AWS Cloud Resume</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, devops, aws, cicd, terraform'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/aws_resume_cicd/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Building a CI/CD Pipeline for my AWS Cloud Resume">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/docker_linux.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Building a CI/CD Pipeline for my AWS Cloud Resume">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/aws_resume_cicd/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/aws_resume_cicd/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/aws_resume_cicd/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Building a CI/CD Pipeline for my AWS Cloud Resume</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            March 6, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/devops">devops</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/aws">aws</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/cicd">cicd</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/terraform">terraform</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="/image/aws_diagram.png" alt="Alt Text"></p>
+<p>This past week I decided to tackle the AWS Cloud Resume Challenge by Forrest Brazeal which involves deploying my resume into the cloud using AWS resources.</p>
+<p>In today&rsquo;s world, Continuous Integration and Continuous Deployment (CI/CD) have become essential practices for delivering high-quality software quickly and efficiently. In this blog post, I will share my experience building a CI/CD pipeline for the Frontend of my AWS Cloud Resume.</p>
+<h2 id="what-is-continuous-integration"><em><strong>What is Continuous Integration?</strong></em></h2>
+<p>CI is the practice of automating the integration of code changes from multiple contributors into a single software project. For this project, this will be the process of every time we perform code changes to our front-end code which will trigger a build process of our site.</p>
+<h2 id="what-is-continuous-deployment"><em><strong>What is Continuous Deployment?</strong></em></h2>
+<p>CD is the practice in software development where code changes to an application are released automatically into the production environment. For this project, this will take place once our site is ready to be deployed we will sync our files with our newly created S3 Bucket hence making it public.</p>
+<p>Our pipeline will consist of the following three-step workflow:</p>
+<p><em><strong>Build Step:</strong></em> We will execute any building procedures to get our website ready to be deployed into the real world.</p>
+<p><em><strong>Deploy Step:</strong></em> Using Terraform we will provision our AWS resources and sync our front-end source with our newly created S3 Bucket.</p>
+<p><em><strong>Smoke Test Step:</strong></em> To make sure our website is up and running we will use a cypress test to verify the core functionality of our site is good before finishing our CI/CD pipeline.</p>
+<p><img src="/image/aws_diagram.png" alt="Alt Text"></p>
+<p>Our infrastructure will consist of the following diagram, it all starts by pushing a new commit into our GitHub repository which will then trigger our GitHub Actions to execute our CI/CD pipeline, Terraform as part of our deployment step will then proceed with provisioning our AWS resources into the real world, and syncing our front-end code into the S3 Bucket with website configuration enabled to host our static site.</p>
+<p>As you can see the only resource that is static will be the S3 Bucket that holds our Terraform state file, since we are using Github Actions to provision our resources a remote backend is necessary.</p>
+<p>With that being said, let&rsquo;s get started. We must convert all our AWS resources into Infrastructure as Code this includes our S3 Bucket with website configuration enabled, next we have a CloudFront distribution for our S3 Bucket to redirect HTTP traffic to HTTPS, and last but not least our Route 53 Alias record that will point our subdomain, in this case, <a href="https://resume.madebyfrankely.com/">https://resume.madebyfrankely.com/</a> to our CloudFront distribution.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_s3_bucket&#34;</span> <span style="color:#e6db74">&#34;site&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">bucket</span> = var.<span style="color:#a6e22e">site_domain</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_s3_bucket_website_configuration&#34;</span> <span style="color:#e6db74">&#34;site&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">bucket</span> = <span style="color:#a6e22e">aws_s3_bucket</span>.<span style="color:#a6e22e">site</span>.<span style="color:#a6e22e">id</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">index_document</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">suffix</span> = &#34;index.<span style="color:#a6e22e">html</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">resource &#34;</span><span style="color:#a6e22e">aws_s3_bucket_acl</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#a6e22e">site</span><span style="color:#e6db74">&#34; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    bucket = aws_s3_bucket.site.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    acl = &#34;</span><span style="color:#a6e22e">public</span><span style="color:#f92672">-</span><span style="color:#a6e22e">read</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">resource &#34;</span><span style="color:#a6e22e">aws_s3_bucket_policy</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#a6e22e">site</span><span style="color:#e6db74">&#34; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  bucket = aws_s3_bucket.site.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  policy = jsonencode({
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Version = &#34;</span><span style="color:#ae81ff">2012-10-17</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Statement = [
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Sid       = &#34;</span><span style="color:#a6e22e">PublicReadGetObject</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Effect    = &#34;</span><span style="color:#a6e22e">Allow</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Principal = &#34;</span><span style="color:#f92672">*</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Action    = &#34;</span><span style="color:#a6e22e">s3</span><span style="color:#f92672">:</span><span style="color:#a6e22e">GetObject</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Resource = [
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          aws_s3_bucket.site.arn,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{<span style="color:#a6e22e">aws_s3_bucket</span>.<span style="color:#a6e22e">site</span>.<span style="color:#a6e22e">arn</span>}<span style="color:#f92672">/*</span><span style="color:#e6db74">&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  })
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"># Since we are using an existing hosted zone already we will use the data block
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">data &#34;</span><span style="color:#a6e22e">aws_route53_zone</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#a6e22e">hosted_zone</span><span style="color:#e6db74">&#34;{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name = var.mainsite_domain
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">resource &#34;</span><span style="color:#a6e22e">aws_route53_record</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#a6e22e">root_domain</span><span style="color:#e6db74">&#34; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name = var.site_domain
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  type = &#34;</span><span style="color:#a6e22e">A</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  alias {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{<span style="color:#a6e22e">aws_cloudfront_distribution</span>.<span style="color:#a6e22e">cdn</span>.<span style="color:#a6e22e">domain_name</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    zone_id = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{<span style="color:#a6e22e">aws_cloudfront_distribution</span>.<span style="color:#a6e22e">cdn</span>.<span style="color:#a6e22e">hosted_zone_id</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    evaluate_target_health = false
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">resource &#34;</span><span style="color:#a6e22e">aws_cloudfront_distribution</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#a6e22e">cdn</span><span style="color:#e6db74">&#34; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  origin {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    origin_id   = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{var.<span style="color:#a6e22e">site_domain</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    domain_name = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{<span style="color:#a6e22e">aws_s3_bucket</span>.<span style="color:#a6e22e">site</span>.<span style="color:#a6e22e">bucket_domain_name</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # If using route53 aliases for DNS we need to declare it here too, otherwise we&#39;ll get 403s.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  aliases = [&#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{var.<span style="color:#a6e22e">site_domain</span>}<span style="color:#e6db74">&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  enabled             = true
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  default_root_object = &#34;</span><span style="color:#a6e22e">index</span>.<span style="color:#a6e22e">html</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  default_cache_behavior {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    allowed_methods  = [&#34;</span><span style="color:#a6e22e">GET</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#a6e22e">HEAD</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#a6e22e">OPTIONS</span><span style="color:#e6db74">&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    cached_methods   = [&#34;</span><span style="color:#a6e22e">GET</span><span style="color:#e6db74">&#34;, &#34;</span><span style="color:#a6e22e">HEAD</span><span style="color:#e6db74">&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    target_origin_id = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{var.<span style="color:#a6e22e">site_domain</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    forwarded_values {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      query_string = true
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      cookies {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        forward = &#34;</span><span style="color:#a6e22e">none</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    viewer_protocol_policy = &#34;</span><span style="color:#a6e22e">allow</span><span style="color:#f92672">-</span><span style="color:#a6e22e">all</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    min_ttl                = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    default_ttl            = 3600
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    max_ttl                = 86400
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # The cheapest priceclass
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  price_class = &#34;</span><span style="color:#a6e22e">PriceClass_100</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  # This is required to be specified even if it&#39;s not used.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  restrictions {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    geo_restriction {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      restriction_type = &#34;</span><span style="color:#a6e22e">none</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      locations        = []
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  viewer_certificate {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    acm_certificate_arn = &#34;</span><span style="color:#960050;background-color:#1e0010">$</span>{var.<span style="color:#a6e22e">certificate_arn</span>}<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ssl_support_method = &#34;</span><span style="color:#a6e22e">sni</span><span style="color:#f92672">-</span><span style="color:#a6e22e">only</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}</span></span></span></code></pre></div>
+<p>Now that we have our AWS resources converted into Infrastructure as Code the rest is simple, now we can start creating our GitHub Actions CI/CD pipeline. Let&rsquo;s first create a new repository inside our GitHub account which will hold our front-end code including our Terraform files, divide them up into two folders one the front-end code only and the other the Terraform files.</p>
+<p>Our repository should look like the following now:</p>
+<p><img src="/image/image-1.png" alt="Alt Text"></p>
+<p>Now I do have two extra folders, one is the backend which you can ignore for now and the next one is the .github/workflows folder which is the folder that will hold our CI/CD Github Actions YAML file. If we hover over to the Actions tab in our repository you will see this</p>
+<p><img src="/image/image-12.png" alt="Alt Text"></p>
+<p>Now I have a few GitHub actions already triggered but this should be empty for you if it&rsquo;s your first time creating a workflow. Our workflow will consist of the following YAML configuration file -</p>
+<p><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Infrastructure</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tf_fmt</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Site</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout Repo</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v2.5.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure AWS credentials</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">aws-actions/configure-aws-credentials@v1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">aws-access-key-id</span>: <span style="color:#ae81ff">${{ secrets.AWS_ACCESS_KEY_ID }}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">aws-secret-access-key</span>: <span style="color:#ae81ff">${{ secrets.AWS_SECRET_ACCESS_KEY }}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">aws-region</span>: <span style="color:#ae81ff">us-east-1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup Terraform</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">hashicorp/setup-terraform@v2</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">terraform_version</span>: <span style="color:#ae81ff">1.3.7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Terraform init, plan and apply</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        echo `pwd`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        echo &#34;tfpath ${{ github.event.inputs.tfpath }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        echo &#34;** Running Terraform Init**&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        terraform init
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        echo &#34;** Running Terraform Validate**&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        terraform validate
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        echo &#34;** Running Terraform Apply**&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        terraform apply -auto-approve</span>        
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">working-directory</span>: <span style="color:#e6db74">&#39;IaC_Terraform&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Sync S3</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">jakejarvis/s3-sync-action@master</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">SOURCE_DIR</span>: <span style="color:#e6db74">&#39;./frontend/source&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">AWS_REGION</span>: <span style="color:#e6db74">&#39;us-east-1&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">AWS_S3_BUCKET</span>: <span style="color:#e6db74">&#39;resume.madebyfrankely.com&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">AWS_ACCESS_KEY_ID</span>: <span style="color:#ae81ff">${{ secrets.AWS_ACCESS_KEY_ID }}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">AWS_SECRET_ACCESS_KEY</span>: <span style="color:#ae81ff">${{ secrets.AWS_SECRET_ACCESS_KEY }}</span></span></span></code></pre></div>
+As you can see our GitHub Actions pipeline consists of four steps.</p>
+<ol>
+<li>Configure our AWS credentials</li>
+<li>Setup our Terraform environment</li>
+<li>Initialize our terraform backend and deploy our infrastructure into the cloud</li>
+<li>Sync our front-end code with our S3 Bucket</li>
+<li>Now with our GitHub action pipeline in place any time we push new code into our main branch these steps will take place and we can sit back and relax our site gets deployed by just updating our code, so cool right?</li>
+</ol>
+<p>Let&rsquo;s see in action:</p>
+<p>With changing a few lines in our front-end code followed by a git push into our repository hence triggering our GitHub Actions.</p>
+<p><img src="/image/image-10.png" alt="Alt Text"></p>
+<p><img src="/image/image-11.png" alt="Alt Text"></p>
+<p>This allows us to also see the progress of our workflow to check how things are being handled behind the scenes. Now once our workflow has been completed. If we try to access our domain using the record we provisioned inside our Route 53 hosted zone we should see our site live.</p>
+<p><img src="/image/image-12.png" alt="Alt Text"></p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

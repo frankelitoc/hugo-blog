@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Installing Docker on my Raspberry Pi (Ubuntu)</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, linux, docker'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/installing_docker_raspberry/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Installing Docker on my Raspberry Pi (Ubuntu)">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/docker_linux.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Installing Docker on my Raspberry Pi (Ubuntu)">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/installing_docker_raspberry/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/installing_docker_raspberry/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/installing_docker_raspberry/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Installing Docker on my Raspberry Pi (Ubuntu)</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            January 6, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/linux">linux</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/docker">docker</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="/image/docker_linux.png" alt="Alt Text"></p>
+<p>I recently got my hands on a Raspberry Pi 4 with 4GBs of RAM for a decently reasonable price. I took the bullet on it to make it my small home server for the next few months since I&rsquo;m experimenting with Linux more and more every day.</p>
+<h2 id="raspberry-pi"><strong>Raspberry Pi</strong></h2>
+<p>A raspberry Pi is a minicomputer the amount of stuff this little thing can achieve is impressive. I have been having my eyes on these micro machines for a while so I was super excited to get a hold of one and make it my home server.</p>
+<h2 id="what-do-i-plan-to-do-with-my-raspberry-pi"><strong>What do I plan to do with my Raspberry Pi?</strong></h2>
+<p>As of right now talking about what software and Linux distribution I&rsquo;m planning to run on this machine are for the main purpose of learning. I will be installing softwares like:</p>
+<ul>
+<li>Ubuntu 22.04 as the base OS</li>
+<li>Docker - To run containers on the go I will go over how I installed it on my environment later on</li>
+<li>Portainer - As the container management platform for Docker which I will also cover as well</li>
+<li>NextCloud - Self-hosted cloud data system</li>
+<li>PiHole - Self-hosted DNS server
+and many more things&hellip;.</li>
+</ul>
+<h2 id="what-is-docker"><strong>What is Docker?</strong></h2>
+<p>Docker is an open source platform that enables developers to build, deploy, run, update and manage containers. Think about it like virtual machines VirtualBox will be your Docker in this example and the virtual machines will be the containers.</p>
+<h2 id="what-are-containers"><strong>What are containers?</strong></h2>
+<p>Think of containers as actual containers in real life. Containers are used to hold things right? Containers in the cloud concept hold all the necessary components, such as files, libraries, and environment variables needed to run a desired application without worrying about the platform.</p>
+<h2 id="why-use-docker"><strong>Why use Docker?</strong></h2>
+<p>The main reason why I decided to use Docker is because of how fast it is. The ability to fire up a container with a few commands in just seconds is unbelievable. I come from downloading windows ISOs and manually going through the process of installing them using VirtualBox. The wait time for downloading and also of installing the OS does not compare with Docker. I&rsquo;m truly amazed by it.</p>
+<p><img src="/image/containers_vs_vms.png" alt="Alt Text"></p>
+<h2 id="why-is-docker-so-fast-how-does-it-manage-to-fire-up-machines-so-quickly"><strong>Why is Docker so fast? How does it manage to fire up machines so quickly?</strong></h2>
+<p>The answer to this question is simple. Let&rsquo;s go back to the VirtualBox and virtual machines example, when you are installing an OS with virtual machines the installation takes care of the operating system including things like the Kernel correct? With Docker, we don&rsquo;t have to worry about the OS or the Kernel base it is all being taken care of already. Docker virtualizes the operating system of the computer on which it is installed and running. All you have to worry about is configuration files and what exactly you want to be running on said containers. That is why Docker is so fast, this enables me to fire up instances fast and efficiently.</p>
+<p>Now to the action of installing Docker:</p>
+<p>First, as good practice let&rsquo;s update and upgrade our existing packages by running the following commands. I&rsquo;m using Ubuntu 22.04 for my environment.</p>
+<p><pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt update
+sudo apt upgrade</code></pre>
+Now that we have our Raspberry Pi updated we can install docker by running the following:</p>
+<p><pre tabindex="0"><code class="language-linux" data-lang="linux">sudo apt install docker.io</code></pre>
+That&rsquo;s all. Docker is now installed, to verify that the installation went through successfully we can check the docker service status which is active in our case</p>
+<p><img src="/image/sdfsdf3.png" alt="Alt Text"></p>
+<p>Let&rsquo;s deploy our first container here using Docker by running:</p>
+<p><pre tabindex="0"><code class="language-linux" data-lang="linux">sudo docker run hello-world</code></pre>
+This command starts a container with the hello-world image which is pulled from the docker hub. This image outputs hello world into our bash to make sure that our Docker is launching containers successfully by communicating with the Docker daemon.</p>
+<p><img src="/image/image-2.png" alt="Alt Text"></p>
+<p>As you can see we get the Hello from Docker! text and we now have our first container running using Docker, all done in about 2-3 seconds.</p>
+<p>Now that we have Docker running and we can deploy containers successfully we can proceed with installing Portainer to manage our containers more easily. I usually force myself to use the bash as much as possible to run, remove and overall manage Docker since you learn more by doing it that way but is also nice to have an interface to help you as well, Portainer will take care of that for us.</p>
+<p>To get Portainer running we will be using Docker as well since we will be deploying it into a container. We can deploy Portainer into a container by using the following commands:</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo docker run -d \
+--name=&#34;portainer&#34; \
+--restart on-failure \
+-p 9000:9000 \
+-p 8000:8000 \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v portainer_data:/data \
+portainer/portainer-ce:latest</code></pre>
+<p>To further explain the logic behind this Docker command it uses the latest image from portainer-ce:latest to run in the container. We are also specifying the ports that we would like this container to be accessed from which will be 9000 (Docker&rsquo;s default port).</p>
+<p>After running this command our container will start and Portainer will be installed successfully. We can verify that our new Portainer container is up and running by calling the following:</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">sudo docker ps</code></pre>
+<p>This command displays the currently active and running containers in our machine.</p>
+<p><img src="/image/image-3.png" alt="Alt Text"></p>
+<p>Now if we open up our machine&rsquo;s IP under port 9000 we will see our Portainer instance up and running :)</p>
+<p><img src="/image/image-4.png" alt="Alt Text"></p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

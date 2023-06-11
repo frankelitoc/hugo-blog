@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/python/</link>
+    <description>Recent content in python on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 06 Mar 2023 23:11:13 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Serverless backend architecture - AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/serverless_lambda/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/serverless_lambda/</guid>
+      <description>When you think about serverless architectures in the cloud what exactly comes to mind? If you have not researched more into this topic you would probably think there is a way to run resources without servers because it&amp;rsquo;s called a server-LESS architecture.
+Well not necessarily, when I mention a serverless architecture I mean we are building an architecture that requires no server management, we don&amp;rsquo;t see the server, or manage it.</description>
+    </item>
+    
+    <item>
+      <title>Containerizing a web application with Docker</title>
+      <link>https://madebyfrankely.com/posts/flask_containerizing/</link>
+      <pubDate>Fri, 24 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/flask_containerizing/</guid>
+      <description>Have you ever wondered if there was a way to code web applications using Python? Flask is just that, it is a web framework that lets you develop web applications using Python.
+It also has many nice features like URL routing, template engine, and so on. I will be containerizing my simple Flask web application, you can find the source code of the application code here.
+This is an extremely simple web application that uses the home.</description>
+    </item>
+    
+  </channel>
+</rss>

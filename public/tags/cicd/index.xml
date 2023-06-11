@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cicd on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/cicd/</link>
+    <description>Recent content in cicd on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jun 2023 00:16:02 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/cicd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment</title>
+      <link>https://madebyfrankely.com/posts/gitlab_cicd/</link>
+      <pubDate>Sun, 04 Jun 2023 00:16:02 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/gitlab_cicd/</guid>
+      <description>In today&amp;rsquo;s world of fast-paced software development, efficient deployment of applications has become more critical than ever. Containerization has revolutionized how we build, ship, and run applications, making it easier to deploy them consistently across different environments.
+In this blog post, we will explore containerizing a simple Node.js weather application GITHUB that displays weather data from any given location, and then with this done proceed to automate its deployment using a GitLab CI/CD pipeline.</description>
+    </item>
+    
+    <item>
+      <title>Building a CI/CD Pipeline for my AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/aws_resume_cicd/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_resume_cicd/</guid>
+      <description>This past week I decided to tackle the AWS Cloud Resume Challenge by Forrest Brazeal which involves deploying my resume into the cloud using AWS resources.
+In today&amp;rsquo;s world, Continuous Integration and Continuous Deployment (CI/CD) have become essential practices for delivering high-quality software quickly and efficiently. In this blog post, I will share my experience building a CI/CD pipeline for the Frontend of my AWS Cloud Resume.
+What is Continuous Integration?</description>
+    </item>
+    
+  </channel>
+</rss>

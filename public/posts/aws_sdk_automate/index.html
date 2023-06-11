@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Automating AWS EC2s with C&#43;&#43; SDK</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, devops, aws, c&#43;&#43;'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/aws_sdk_automate/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Automating AWS EC2s with C&#43;&#43; SDK">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/docker_linux.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Automating AWS EC2s with C&#43;&#43; SDK">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/aws_sdk_automate/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/aws_sdk_automate/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/docker_linux.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/aws_sdk_automate/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Automating AWS EC2s with C&#43;&#43; SDK</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            February 10, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/devops">devops</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/aws">aws</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/c&#43;&#43;">c&#43;&#43;</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1112522279671312445/6038586442907648_1.png" alt="Alt Text"></p>
+<p>The AWS SDK for C++ is a library that makes it easy to integrate your C++ application with AWS services like Amazon S3, Amazon EC2, and many others services.</p>
+<p>For this project I will show how to create a C++ application that we will be using to create AWS EC2 instances from our newly created application using the C++ SDK provided by AWS without the use of logging into our AWS console to perform this action, all this will be done directly from our application hence automating the overall process.</p>
+<p>If you would like to read more about the AWS C++ SDK you can do so <a href="https://aws.amazon.com/sdk-for-cpp/">here</a></p>
+<p>Before we can start writing some code for our application, we must first install the AWS C++ SDK into our system to use the library within our project.</p>
+<p>The SDK is open source and hosted on GitHub <a href="https://github.com/aws/aws-sdk-cpp">here</a></p>
+<p>To set up the AWS SDK for C++, we can either build the SDK ourselves directly from the source or download the libraries using a package manager. For this project, we will be building the SDK ourselves with CMake.</p>
+<p>The SDK source is separated into individual packages by service. Installing the whole SDK can take quite some time (hours) so for the purpose of this project we will be installing only the EC2 packages.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1112524693598113832/image-6_1.png" alt="Alt Text"></p>
+<p>Let&rsquo;s get started by first installing CMake</p>
+<p><a href="https://cmake.org/">https://cmake.org/</a></p>
+<p>CMake is an open-source, cross-platform family of tools designed to build, test, and package software. We will be using it to build the SDK and also to build our application as well after.</p>
+<p>Create a folder where we will be storing the SDK source, after doing so let&rsquo;s clone the repository with Git:</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp</code></pre>
+<p>Next, let&rsquo;s create an extra folder to store our generated build files</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">mkdir sdk_build
+cd sdk_build</code></pre>
+<p>Now that we are inside our sdk_build file we can generate the build files by running CMake.</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">cmake ../aws-sdk-cpp -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_ONLY=&#34;ec2&#34;</code></pre>
+<p>Now that we have the required files to build our SDK we can proceed with</p>
+<pre tabindex="0"><code class="language-linux" data-lang="linux">make
+make install</code></pre>
+<p>Now that we have our SDK installed we can proceed with writing our C++ code to start our EC2 instances</p>
+<p>We can create a new Amazon EC2 instance by calling the EC2Client’s RunInstances function, providing it with a RunInstancesRequest containing the Amazon Machine Image (AMI) to use and an instance type.</p>
+<p>Let&rsquo;s first include our SDK files:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;aws/core/Aws.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;aws/ec2/EC2Client.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;aws/ec2/model/CreateTagsRequest.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;aws/ec2/model/RunInstancesRequest.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;aws/ec2/model/RunInstancesResponse.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span></span></span></code></pre></div>
+<p>After this is done let&rsquo;s define our main function where we will initialize our AWS SDK with InitAPI function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>   methods.
+</span></span><span style="display:flex;"><span>    SDKOptions options;
+</span></span><span style="display:flex;"><span>    options.loggingOptions.logLevel <span style="color:#f92672">=</span> Utils<span style="color:#f92672">::</span>Logging<span style="color:#f92672">::</span>LogLevel<span style="color:#f92672">::</span>Debug;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//The AWS SDK for C++ must be initialized by calling Aws::InitAPI.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">InitAPI</span>(options); 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">//Create instance code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Before the application terminates, the SDK must be shut down. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ShutdownAPI</span>(options);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>As you can see from the above we must initialize the SDK before we attempt to use it, things like setting up our access keys for example take place during the initialization.</p>
+<p>Now to create our instances:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>Aws<span style="color:#f92672">::</span>EC2<span style="color:#f92672">::</span>EC2Client ec2;
+</span></span><span style="display:flex;"><span>    Aws<span style="color:#f92672">::</span>String ami_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ami-06878d265978313ca&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span> Ubuntu Server <span style="color:#ae81ff">22.04</span> AMI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Aws<span style="color:#f92672">::</span>EC2<span style="color:#f92672">::</span>Model<span style="color:#f92672">::</span>RunInstancesRequest run_request;
+</span></span><span style="display:flex;"><span>    run_request.<span style="color:#a6e22e">SetImageId</span>(ami_id);
+</span></span><span style="display:flex;"><span>    run_request.<span style="color:#a6e22e">SetInstanceType</span>(Aws<span style="color:#f92672">::</span>EC2<span style="color:#f92672">::</span>Model<span style="color:#f92672">::</span>InstanceType<span style="color:#f92672">::</span>t1_micro);
+</span></span><span style="display:flex;"><span>    run_request.<span style="color:#a6e22e">SetMinCount</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    run_request.<span style="color:#a6e22e">SetMaxCount</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> run_outcome <span style="color:#f92672">=</span> ec2.<span style="color:#a6e22e">RunInstances</span>(run_request);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>run_outcome.<span style="color:#a6e22e">IsSuccess</span>())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Failed to start ec2 instance &#34;</span> <span style="color:#f92672">&lt;&lt;</span> instanceName <span style="color:#f92672">&lt;&lt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34; based on ami &#34;</span> <span style="color:#f92672">&lt;&lt;</span> ami_id <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">&lt;&lt;</span>
+</span></span><span style="display:flex;"><span>            run_outcome.<span style="color:#a6e22e">GetError</span>().<span style="color:#a6e22e">GetMessage</span>() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
+<p>That simple. We specify the AMI to the variable ami_id of type Aws::String which is a char array to hold our ubuntu AMI that will be used to launch our instances, as well as the instance type which we set to t1_micro for this example.</p>
+<p>After we set our configuration we then run our RunInstances function passing out our configuration and deploying it to the real world.</p>
+<p>Now if we build our C++ application and run it.</p>
+<p>NOTE: For this example, I will be using my own C++ application that uses the same logic as I explained above to showcase the results.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1112525734548869120/image-7_1.png" alt="Alt Text"></p>
+<p>Let&rsquo;s launch 3 t2.micro instances from our new application.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1112525844074733658/image-10_1.png" alt="Alt Text"></p>
+<p>We head over to our AWS Console to check our EC2 dashboard for our newly created EC2 instance.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1112525958759587901/image-9_1.png" alt="Alt Text"></p>
+<h2 id="conclusion"><em><strong>Conclusion:</strong></em></h2>
+<p>The AWS C++ SDK can be used for many more different things and services to automate the overall process of managing services in AWS. This example can be built up into so many different things (which is something I&rsquo;m already working on as you can see from my application which I coded using IMGUI an open-source UI to integrate into C++ applications.) I&rsquo;ll leave that to the reader as a challenge to expand their applications as much as possible.</p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

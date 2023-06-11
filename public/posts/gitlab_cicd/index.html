@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment</title>
+    <meta name="description" content="Sys Admin | Developer | DevOps">
+    <meta name="keywords" content='blog, gokarna, hugo, linux, cicd, devops'>
+
+    <meta property="og:url" content="https://madebyfrankely.com/posts/gitlab_cicd/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment">
+    <meta property="og:description" content="Sys Admin | Developer | DevOps">
+    <meta property="og:image" content="https://madebyfrankely.com/image/avatar.png">
+    <meta property="og:image:secure_url" content="https://madebyfrankely.com/image/avatar.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment">
+    <meta name="twitter:description" content="Sys Admin | Developer | DevOps">
+    <meta property="twitter:domain" content="https://madebyfrankely.com/posts/gitlab_cicd/">
+    <meta property="twitter:url" content="https://madebyfrankely.com/posts/gitlab_cicd/">
+    <meta name="twitter:image" content="https://madebyfrankely.com/image/avatar.png">
+
+    
+    <link rel="canonical" href="https://madebyfrankely.com/posts/gitlab_cicd/" />
+
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="https://madebyfrankely.com/css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="https://madebyfrankely.com/css/dark.css">
+
+    <script src="https://madebyfrankely.com/js/svg-injector.min.js"></script>
+    <script src="https://madebyfrankely.com/js/feather-icons.min.js"></script>
+    <script src="https://madebyfrankely.com/js/main.js"></script>
+
+    
+    
+        <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+      });
+    </script>
+  
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://madebyfrankely.com">
+                <img src="https://madebyfrankely.com/image/avatar.png" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://madebyfrankely.com">madebyfrankie</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/posts/"> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://madebyfrankely.com/tags/"> Tags </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/posts/"> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://madebyfrankely.com/tags/"> Tags </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/frankelitoc"><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>GitLab CI/CD Pipeline: Kubernetes (EKS), and Terraform for deployment</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            June 4, 2023
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/linux">linux</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/cicd">cicd</a></li>
+        
+            <li class="post-tag"><a href="https://madebyfrankely.com/tags/devops">devops</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1114769740976635934/xo8c2f0mcoyyx7gcr3ox.webp" alt="Alt Text"></p>
+<p>In today&rsquo;s world of fast-paced software development, efficient deployment of applications has become more critical than ever. Containerization has revolutionized how we build, ship, and run applications, making it easier to deploy them consistently across different environments.</p>
+<p>In this blog post, we will explore containerizing a simple Node.js weather application GITHUB that displays weather data from any given location, and then with this done proceed to automate its deployment using a GitLab CI/CD pipeline. I will demonstrate the entire process of containerizing the application, pushing it to a container registry, which will be AWS ECR, and deploying it to EKS ready to be used.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1115081880891564042/image_2.png" alt="Alt Text"></p>
+<p>Not only that but I will also automate our infrastructure resources provisioning with Terraform as well. A full CI/CD pipeline, any time a new change in our code has been made and pushed into the Gitlab repository, will trigger our resources to get provisioned and deploy our application.</p>
+<p>First, we need to dockerize the application by creating its Dockerfile.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:latest</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /usr/src/app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> source/package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm install<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> source/. .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5000</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;start&#34;</span>]</span></span></code></pre></div>
+<p>This Dockerfile is based on the latest Node.js image since our application requires Node.js. Then, the Dockerfile copies all the files and directories from the source directory to the current working directory in the Docker image using the COPY instruction.</p>
+<p>Finally, the CMD instruction specifies the command that should be executed when a container based on this image is run. In this case, it starts the Node.js application using the npm start command.</p>
+<p>Now that we have successfully containerized the application we can proceed with writing our infrastructure that will be used to deploy the application. For this particular case, I will be using Terraform to write our EKS cluster with its required configurations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_default_subnet&#34;</span> <span style="color:#e6db74">&#34;default_az1&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = <span style="color:#e6db74">&#34;us-east-1a&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tags</span> = {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Name</span> = <span style="color:#e6db74">&#34;Default subnet for us-east-1a&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_default_subnet&#34;</span> <span style="color:#e6db74">&#34;default_az2&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = <span style="color:#e6db74">&#34;us-east-1b&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tags</span> = {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Name</span> = <span style="color:#e6db74">&#34;Default subnet for us-east-1b&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_eks_cluster&#34;</span> <span style="color:#e6db74">&#34;eks_cluster_tf&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">name</span>     = <span style="color:#e6db74">&#34;eks_cluster&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">role_arn</span> = <span style="color:#a6e22e">aws_iam_role</span>.<span style="color:#a6e22e">eks</span><span style="color:#f92672">-</span><span style="color:#a6e22e">deployment</span>.<span style="color:#a6e22e">arn</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_config</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">subnet_ids</span> = [<span style="color:#a6e22e">aws_default_subnet</span>.<span style="color:#a6e22e">default_az1</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">aws_default_subnet</span>.<span style="color:#a6e22e">default_az2</span>.<span style="color:#a6e22e">id</span>]
+</span></span><span style="display:flex;"><span>  }<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">depends_on</span> = [
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws_iam_role_policy_attachment</span>.<span style="color:#a6e22e">AmazonEKSClusterPolicy</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws_iam_role_policy_attachment</span>.<span style="color:#a6e22e">AmazonEKSVPCResourceController</span>,
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_eks_node_group&#34;</span> <span style="color:#e6db74">&#34;example&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cluster_name</span>    = <span style="color:#a6e22e">aws_eks_cluster</span>.<span style="color:#a6e22e">eks_cluster_tf</span>.<span style="color:#a6e22e">name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">node_group_name</span> = <span style="color:#e6db74">&#34;main-node-group&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">node_role_arn</span>   = <span style="color:#a6e22e">aws_iam_role</span>.<span style="color:#a6e22e">ec2</span><span style="color:#f92672">-</span><span style="color:#a6e22e">worknode</span>.<span style="color:#a6e22e">arn</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">subnet_ids</span>      = [<span style="color:#a6e22e">aws_default_subnet</span>.<span style="color:#a6e22e">default_az1</span>.<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">aws_default_subnet</span>.<span style="color:#a6e22e">default_az2</span>.<span style="color:#a6e22e">id</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">scaling_config</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">desired_size</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">max_size</span>     = <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">min_size</span>     = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">update_config</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">max_unavailable</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  }<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">depends_on</span> = [
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws_iam_role_policy_attachment</span>.<span style="color:#a6e22e">example</span><span style="color:#f92672">-</span><span style="color:#a6e22e">AmazonEKSWorkerNodePolicy</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws_iam_role_policy_attachment</span>.<span style="color:#a6e22e">example</span><span style="color:#f92672">-</span><span style="color:#a6e22e">AmazonEKS_CNI_Policy</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">aws_iam_role_policy_attachment</span>.<span style="color:#a6e22e">example</span><span style="color:#f92672">-</span><span style="color:#a6e22e">AmazonEC2ContainerRegistryReadOnly</span>,
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">output</span> <span style="color:#e6db74">&#34;endpoint&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">aws_eks_cluster</span>.<span style="color:#a6e22e">eks_cluster_tf</span>.<span style="color:#a6e22e">endpoint</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">output</span> <span style="color:#e6db74">&#34;kubeconfig-certificate-authority-data&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">aws_eks_cluster</span>.<span style="color:#a6e22e">eks_cluster_tf</span>.<span style="color:#a6e22e">certificate_authority</span>[<span style="color:#ae81ff">0</span>].data
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>This is a Terraform configuration file that specifies the creation of an Amazon Elastic Kubernetes Service (EKS) cluster with a node group. The file includes the following resources:</p>
+<p>aws_eks_cluster resource: Defines the EKS cluster and specifies the name, IAM role for the EKS service, and the VPC configuration that includes the subnet IDs of the two default subnets.</p>
+<p>aws_eks_node_group resource: Defines the EKS node group and specifies the cluster name, node group name, IAM role for the EC2 instances, and the subnet IDs of the two default subnets. This resource also specifies the scaling and update configurations for the node group and has a depends_on block that ensures that the IAM Role policies are created before and deleted after the EKS node group and its associated infrastructure.</p>
+<p>Now that we have all our pieces is time to put them together with some CI/CD. I will be using Gitlab for the purpose of this post.</p>
+<p>Our pipeline will consist of two stages:</p>
+<ol>
+<li>Build the application (Docker)</li>
+<li>Deploy our infrastructure and application (Terraform, EKS)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">image</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">registry.gitlab.com/gitlab-org/gitlab-build-images:terraform</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">entrypoint</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#39;/usr/bin/env&#39;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#39;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">stages</span>:          <span style="color:#75715e"># List of stages for jobs, and their order of execution</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">build</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">deploy</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">variables</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">DOCKER_REGISTRY</span>: <span style="color:#ae81ff">320964430417.</span><span style="color:#ae81ff">dkr.ecr.us-east-1.amazonaws.com</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">AWS_DEFAULT_REGION</span>: <span style="color:#ae81ff">us-east-1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">APP_NAME</span>: <span style="color:#ae81ff">weatherapp_nodejs</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">TF_ROOT</span>: <span style="color:#ae81ff">infrastructure </span> <span style="color:#75715e"># The relative path to the root directory of the Terraform project</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">cache</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">paths</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">.terraform</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">buildapp-job</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker:latest</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">build</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker:dind</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">apk add --no-cache curl jq python3 py3-pip</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">pip install awscli</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $DOCKER_REGISTRY</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">aws --version</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker info</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker --version</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">echo &#34;Building the image...&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker build --pull -t $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID -t $DOCKER_REGISTRY/$APP_NAME:latest .</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">docker push -a $DOCKER_REGISTRY/$APP_NAME</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">echo &#34;Compile complete.&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">if</span>: <span style="color:#ae81ff">$CI_COMMIT_BRANCH</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">exists</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">Dockerfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">deploy-infrastructure</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">cd &#34;${TF_ROOT}&#34;</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">terraform --version</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#ae81ff">terraform init -backend-config=&#34;tfstate.config&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">terraform validate</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">terraform plan -out=&#34;planfile&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">terraform apply &#34;planfile&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">artifacts</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">paths</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">planfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">deploy-eks</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">matshareyourscript/aws-helm-kubectl</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">deploy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">before_script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">export AWS_DEFAULT_REGION=us-east-1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">script</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">cd eks</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">aws eks update-kubeconfig --name eks_cluster --region us-east-1</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">kubectl apply -f aws-auth.yaml</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">kubectl apply -f deployment.yaml</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">kubectl apply -f service.yaml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">dependencies</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">deploy-infrastructure</span></span></span></code></pre></div>
+<p>The pipeline defines two stages: &ldquo;build&rdquo; and &ldquo;deploy&rdquo;. In the &ldquo;build&rdquo; stage, a Docker image is built from a Dockerfile and pushed to an ECR registry. In the &ldquo;deploy&rdquo; stage, the Terraform script is used to deploy the infrastructure, followed by deploying the Kubernetes resources to the EKS cluster.</p>
+<p>The pipeline configuration file also includes several environment variables, such as the Docker registry URL, the AWS region, and the Terraform root directory. It uses the Docker-in-Docker (dind) service to build and push the Docker image. Additionally, the &ldquo;awscli&rdquo; and &ldquo;terraform&rdquo; tools are installed and used in the pipeline.</p>
+<p>The &ldquo;deploy-eks&rdquo; job uses an external Docker image that has the necessary tools installed to interact with the EKS cluster. It also depends on the successful completion of the &ldquo;deploy-infrastructure&rdquo; job, indicating that the infrastructure is in place before deploying the Kubernetes resources.</p>
+<p>Now that we have tied up all our pieces with some CI/CD let&rsquo;s test our pipeline by pushing all our changes into our repository.</p>
+<p><img src="https://cdn.discordapp.com/attachments/953834757257580554/1115091927247880202/image-1.png" alt="Alt Text"></p>
+<p>We are good! Our application has been fully deployed into our EKS cluster and is now available to use by our customers.</p>
+
+        </p>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2023 madebyfrankie</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
+</body>
+</html>

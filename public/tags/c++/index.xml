@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>c&#43;&#43; on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/c&#43;&#43;/</link>
+    <description>Recent content in c&#43;&#43; on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 10 Feb 2023 23:11:13 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automating AWS EC2s with C&#43;&#43; SDK</title>
+      <link>https://madebyfrankely.com/posts/aws_sdk_automate/</link>
+      <pubDate>Fri, 10 Feb 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_sdk_automate/</guid>
+      <description>The AWS SDK for C++ is a library that makes it easy to integrate your C++ application with AWS services like Amazon S3, Amazon EC2, and many others services.
+For this project I will show how to create a C++ application that we will be using to create AWS EC2 instances from our newly created application using the C++ SDK provided by AWS without the use of logging into our AWS console to perform this action, all this will be done directly from our application hence automating the overall process.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>administration on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/administration/</link>
+    <description>Recent content in administration on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 30 Dec 2022 23:11:13 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/administration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Installing a LAMP Stack on Ubuntu 20.04</title>
+      <link>https://madebyfrankely.com/posts/linux_lamp_stack/</link>
+      <pubDate>Fri, 30 Dec 2022 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/linux_lamp_stack/</guid>
+      <description>In this project, I will be showing you how to set up a LAMP Web Server on a Ubuntu 20.04 VPS so that we can have our own website!
+What is meant by LAMP Stack? The answer is actually in the name itself. A LAMP stack is basically a bundle of different software technologies that people use to build websites and even web applications. LAMP is an acronym for the operating system, Linux; the web server, Apache; the database server, MySQL; and the programming language, PHP.</description>
+    </item>
+    
+  </channel>
+</rss>

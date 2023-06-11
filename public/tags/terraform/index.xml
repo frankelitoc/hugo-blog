@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>terraform on madebyfrankie</title>
+    <link>https://madebyfrankely.com/tags/terraform/</link>
+    <description>Recent content in terraform on madebyfrankie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 06 Mar 2023 23:11:13 -0400</lastBuildDate><atom:link href="https://madebyfrankely.com/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a CI/CD Pipeline for my AWS Cloud Resume</title>
+      <link>https://madebyfrankely.com/posts/aws_resume_cicd/</link>
+      <pubDate>Mon, 06 Mar 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/aws_resume_cicd/</guid>
+      <description>This past week I decided to tackle the AWS Cloud Resume Challenge by Forrest Brazeal which involves deploying my resume into the cloud using AWS resources.
+In today&amp;rsquo;s world, Continuous Integration and Continuous Deployment (CI/CD) have become essential practices for delivering high-quality software quickly and efficiently. In this blog post, I will share my experience building a CI/CD pipeline for the Frontend of my AWS Cloud Resume.
+What is Continuous Integration?</description>
+    </item>
+    
+    <item>
+      <title>Deploying an Nginx Web Server on an EC2 instance with Terraform</title>
+      <link>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</link>
+      <pubDate>Thu, 19 Jan 2023 23:11:13 -0400</pubDate>
+      
+      <guid>https://madebyfrankely.com/posts/terraform_to_launch_nginx/</guid>
+      <description>Why waste your time clicking and setting up infrastructure through a web console if you can write code to provision those resources for you?
+Today I will share with you my latest project of deploying an EC2 instance using Terraform, but not only we will be provisioning this instance, also running a bash script as soon as it&amp;rsquo;s deployed to install Nginx to have a small site for us to show our friends like this.</description>
+    </item>
+    
+  </channel>
+</rss>
