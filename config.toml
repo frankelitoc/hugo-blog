@@ -47,7 +47,7 @@ enableRobotsTXT = true
 [menu]
   [[menu.main]]
     # Unique identifier for a menu item
-    identifier = "Blog"
+    identifier = "posts"
 
     url = "/posts/"
     
@@ -58,14 +58,14 @@ enableRobotsTXT = true
     post = ""
 
     # Display name
-    name = "Posts"
+    name = "Blog"
 
     # Weights are used to determine the ordering
     weight = 1
 
   [[menu.main]]
-    identifier = "Topics"
-    name = "Tags"
+    identifier = "tags"
+    name = "Topics"
     url = "/tags/"
     weight = 2
     
