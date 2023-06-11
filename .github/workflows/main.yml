@@ -1,4 +1,4 @@
-name: Deploy Infrastructure
+name: Blog Deployment
 
 on:
   push:
@@ -10,7 +10,6 @@ jobs:
     name: Deploy Site
     runs-on: ubuntu-latest
     steps:
-
     - name: Checkout Repo
       uses: actions/checkout@v2.5.0
 
@@ -28,7 +27,7 @@ jobs:
 
     - name: Build Hugo Site
       run: hugo --minify
-
+    
     - name: Sync S3
       uses: jakejarvis/s3-sync-action@master
       env:
@@ -37,3 +36,8 @@ jobs:
         AWS_S3_BUCKET: 'madebyfrankely.com'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Invalidate CDN Cache
+      run: |
+        aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths '/*'
+
