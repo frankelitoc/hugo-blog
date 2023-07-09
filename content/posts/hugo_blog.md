@@ -3,7 +3,7 @@ title: "HUGO - New Blog Framework with Github Actions CI/CD"
 date: 2023-06-11T16:46:12-04:00
 type: "post"
 tags: ["cicd", "Golang"]
-draft: false
+draft: true
 ---
 
 ![Alt Text](/image/docker_linux.png)

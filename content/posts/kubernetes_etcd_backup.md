@@ -4,7 +4,7 @@ date: 2023-07-05T23:11:13-04:00
 type: "post"
 image: "image/docker_linux.png"
 tags: ["devops", "kubernetes", "docker"]
-draft: false
+draft: true
 ---
 ![Alt Text](https://cdn.discordapp.com/attachments/953834757257580554/1105697155408220262/1620155432-blog-library-product-terraform-aws-logomarks-dark.jpg)
 
