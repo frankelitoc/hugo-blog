@@ -1,0 +1,11 @@
+<footer class="footer">
+    <!-- Option for user to inject custom html -->
+    {{ if .Site.Params.CustomFooterHTML }}
+    {{ .Site.Params.CustomFooterHTML | safeHTML }}
+    {{ end }}
+
+    <span>&copy; {{ now.Year }} {{ .Site.Params.Footer}}</span>
+    <span>
+        Deployed 🚀 using <a target="_blank" href="https://docs.github.com/en/actions">Github Actions</a> & Hosted with &#10084;&#65039; in <a target="_blank" href="https://aws.amazon.com/s3/">AWS S3</a>
+    </span>
+</footer>
